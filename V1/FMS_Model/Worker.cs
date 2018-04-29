@@ -42,6 +42,7 @@ namespace FMS_Model
         public string UserType { get; set; }
 
         public double Balance { get; set; }
+        public double TotalRatings { get; set; }
 
 
         public List<SelectedWorker> SelectedWorkers=new List<SelectedWorker>();
@@ -53,6 +54,14 @@ namespace FMS_Model
 
         public string RatePerHour { get; set; }
         public float EarnedMoney { get; set; }
+
+
+        public int Ontime { get; set; }
+        public int Onbudget { get; set; }
+        public int Behaviour { get; set; }
+        public int Completeness { get; set; }
+        public int Communicationskill { get; set; }
+
 
        
         

@@ -45,5 +45,6 @@ namespace FMS_Entities
       
         public double Balance { get; set; }
 
+        public double Totalratings { get; set; }
     }
 }

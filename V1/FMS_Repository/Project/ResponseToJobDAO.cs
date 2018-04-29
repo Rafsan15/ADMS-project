@@ -23,13 +23,25 @@ namespace FMS_Repository
 
                 //if (dt == null || dt.Rows.Count == 0)
                 //{
-                    // ResponseToaJob.PostID = GetID();
-                    query = "insert into ResponseToaJob values(" + ResponseToaJob.PostId + "," + ResponseToaJob.WUserId + "," + ResponseToaJob.FixedPrice + ",'" + ResponseToaJob.SubmissionTime + "',"+0+")";
+                var result2 = GetAll(ResponseToaJob.PostId);
+                int c = 0;
+                foreach (var p in result2)
+                {
+                    if (p.WUserId == ResponseToaJob.WUserId)
+                        c++;
+                }
+                if(c==0)
+                    query = "insert into ResponseToaJob values(" + ResponseToaJob.PostId + "," + ResponseToaJob.WUserId + "," + ResponseToaJob.FixedPrice + ",'" + ResponseToaJob.SubmissionTime + "',"+0+","+0+")";
+
+                else
+                {
+                    return null;
+                }
                 //}
                 //else
                 //{
-                //    query = "update ResponseToaJob set FixedPrice=" + ResponseToaJob.FixedPrice + ",SubmissionTime='" + ResponseToaJob.SubmissionTime + "' where PostID=" +
-                //      ResponseToaJob.PostId;
+                //    query = "update ResponseToaJob set Flag2=" +1 + " where WUserId=" +
+                //      ResponseToaJob.WUserId;
                 //}
 
                
@@ -153,6 +165,7 @@ namespace FMS_Repository
                 u.WUserId = Int32.Parse(row["WUserID"].ToString());
                 u.FixedPrice = Int32.Parse(row["FixedPrice"].ToString());
                 u.Flag = Int32.Parse(row["Flag"].ToString());
+                u.Flag2 = Int32.Parse(row["Flag2"].ToString());
                 u.SubmissionTime = row["SubmissionDate"].ToString();
               
 

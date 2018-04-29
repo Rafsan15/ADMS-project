@@ -5,8 +5,10 @@
 }
 @for (int i = 0; i < @Model.UserId.Count; i++)
 {
-    <a href="@Url.Action("RatingWorkers","Owner")/@Model.UserId[i]" class="btn btn-success" type="button">@Model.Name[i]</a>
-    <br/>
+    @Html.ActionLink(@Model.Name[i], "RatingWorkers", "Owner", new { id = @Model.UserId[i], id2 = @Model.PostId }, new { @id = @Model.UserId[i] })
+    <br />
+    @*<a href="@Url.Action("RatingWorkers","Owner")/@Model.UserId[i]" class="btn btn-success" type="button">@Model.Name[i]</a>
+    <br/>*@
 
 }
 

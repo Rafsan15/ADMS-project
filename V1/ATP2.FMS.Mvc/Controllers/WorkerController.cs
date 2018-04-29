@@ -20,6 +20,26 @@ namespace ATP2.FMS.Mvc.Controllers
             var workerInfo = userDao.GetById(JsonConvert.DeserializeObject<UserInfo>(User.Identity.Name).UserId);
             //   var ownerCMP = workerDao.GetByID(JsonConvert.DeserializeObject<UserInfo>(User.Identity.Name).UserId);
             var workerVM = new Worker();
+            var workerRate = ratingWorkerDao.GetAll1(JsonConvert.DeserializeObject<UserInfo>(User.Identity.Name).UserId);
+            int ti = 0;
+            int bu = 0;
+            int beh = 0;
+            int com = 0;
+            int cmp = 0;
+            foreach (var p in workerRate)
+            {
+                ti = p.OnTime + ti;
+                bu = p.OnBudget + ti;
+                beh = p.Behaviour + ti;
+                com = p.CommunicationSkill + ti;
+                cmp = p.Completeness + ti;
+            }
+
+            ti = ti / workerRate.Count;
+            bu = bu / workerRate.Count;
+            beh = beh / workerRate.Count;
+            com = com / workerRate.Count;
+            cmp = cmp / workerRate.Count;
             workerVM.Balance = workerInfo.Data.Balance;
             workerVM.City = workerInfo.Data.City;
             //  workerVM.RatePerHour = ownerCMP.Data.RatePerHour;
@@ -34,6 +54,12 @@ namespace ATP2.FMS.Mvc.Controllers
             workerVM.State = workerInfo.Data.State;
             workerVM.UserId = workerInfo.Data.UserId;
             workerVM.UserType = workerInfo.Data.UserType;
+            workerVM.TotalRatings = workerInfo.Data.Totalratings;
+            workerVM.Onbudget = bu;
+            workerVM.Ontime = ti;
+            workerVM.Behaviour = beh;
+            workerVM.Communicationskill = com;
+            workerVM.Completeness = cmp;
             var result = selectedWorkerDao.GetAllUser(CurrentUser.User.UserId);
             foreach (var selectedWorker in result)
             {

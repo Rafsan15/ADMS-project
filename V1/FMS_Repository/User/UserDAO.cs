@@ -27,26 +27,26 @@ namespace FMS_RepositoryOracle
                         userinfo.UserId = GetId();
                         var d = userinfo.JoinDate.ToString(string.Format("dd/MMM/yyyy"));
                         var b = userinfo.DateofBrith.ToString(string.Format("dd/MMM/yyyy"));
-                        query = "insert into UserInfo values(" + userinfo.UserId + ",'" + userinfo.FristName + "','" + userinfo.LastName + "','" + userinfo.Email + "','" + userinfo.Password + "','" +b + "','" + d + "','','" + userinfo.City + "','" + userinfo.State + "','" + userinfo.Country + "',"+0+",'" + userinfo.UserType + "')";
+                        query = "insert into UserInfo values(" + userinfo.UserId + ",'" + userinfo.FristName + "','" + userinfo.LastName + "','" + userinfo.Email + "','" + userinfo.Password + "','" +b + "','" + d + "','','" + userinfo.City + "','" + userinfo.State + "','" + userinfo.Country + "',"+0+","+0.0+",'" + userinfo.UserType + "')";
                     }
                     else
                     {
                        // var b = userinfo.DateofBrith.ToString(string.Format("dd/MMM/yyyy"));
 
-                        //string q1 = "declare ID trackuser.Userid%type; UName trackuser.username%type;  begin ID:=" + userinfo.UserId + ";  UName:='" + userinfo.FristName + "'; ";
-                        //string q2 = "track_user_pkg.P_UPDATEUSER(ID, UName); end;";
+                        string q1 = "declare ID trackuser.Userid%type; UName trackuser.username%type;  begin ID:=" + userinfo.UserId + ";  UName:='" + userinfo.FristName + "'; ";
+                        string q2 = "track_user_pkg.P_UPDATEUSER(ID, UName); end;";
 
-                        //query = q1 + "update UserInfo set FirstName='" + userinfo.FristName + "',LastName='" +
-                        //        userinfo.LastName + "',Password='" + userinfo.Password + "',City='" + userinfo.City +
-                        //        "',State='" + userinfo.State + "',ProPic='" + userinfo.ProPic + "',Country='" +
-                        //        userinfo.Country + "',Balance=" + userinfo.Balance + " where UserId=" +
-                        //        userinfo.UserId + ";" + q2;
-                        query = "update UserInfo set FirstName='" + userinfo.FristName + "',LastName='" +
-                                       userinfo.LastName + "',Password='" + userinfo.Password + "',City='" +
-                                       userinfo.City +
-                                       "',State='" + userinfo.State + "',ProPic='" + userinfo.ProPic + "',Country='" +
-                                       userinfo.Country + "',Balance=" + userinfo.Balance + " where UserId=" +
-                                       userinfo.UserId;
+                        query = q1 + "update UserInfo set FirstName='" + userinfo.FristName + "',LastName='" +
+                                userinfo.LastName + "',Password='" + userinfo.Password + "',City='" + userinfo.City +
+                                "',State='" + userinfo.State + "',ProPic='" + userinfo.ProPic + "',Country='" +
+                                userinfo.Country + "',Balance=" + userinfo.Balance + " where UserId=" +
+                                userinfo.UserId + ";" + q2;
+                        //query = "update UserInfo set FirstName='" + userinfo.FristName + "',LastName='" +
+                        //               userinfo.LastName + "',Password='" + userinfo.Password + "',City='" +
+                        //               userinfo.City +
+                        //               "',State='" + userinfo.State + "',ProPic='" + userinfo.ProPic + "',Country='" +
+                        //               userinfo.Country + "',Balance=" + userinfo.Balance + " where UserId=" +
+                        //               userinfo.UserId;
 
                     }
 
@@ -295,6 +295,7 @@ namespace FMS_RepositoryOracle
                     u.Country = row["Country"].ToString();
                     u.UserType = row["UserType"].ToString();
                     u.Balance = Int32.Parse(row["Balance"].ToString());
+                    u.Totalratings = Double.Parse(row["Totalratings"].ToString());
                     return u;
                 }
                 catch (Exception ex)

@@ -30,6 +30,7 @@ namespace FMS_Entities
         public string SubmissionTime { get; set; }
 
         public int Flag { get; set; }
+        public int Flag2 { get; set; }
 
     }
 }

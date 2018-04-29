@@ -18,13 +18,15 @@ namespace FMS_Repository
             var result = new Result<RatingWorker>();
             try
             {
-                string query = "select * from RatingWorker where UserId=" + RatingWorker.UserId;
+                //string query = "select * from RatingWorker where UserId=" + RatingWorker.UserId;
                 //var dt = DataAccess.GetDataTable(query);
 
                 //if (dt == null || dt.Rows.Count == 0)
                 //{
                     // RatingWorker.UserId = GetID();
-                    query = "insert into RatingWorker values(" + RatingWorker.UserId + "," + RatingWorker.CommunicationSkill + "," + RatingWorker.OnBudget + "," + RatingWorker.OnTime + "," + RatingWorker.Behaviour + "," + RatingWorker.Completeness + ")";
+                string str = "declare ID trackuser.Userid%type; begin ID:=" + RatingWorker.UserId + ";";
+                string st = " updateUserRating(ID); end;";
+                string query = str + "insert into RatingWorker values(" + RatingWorker.UserId + "," + RatingWorker.CommunicationSkill + "," + RatingWorker.OnBudget + "," + RatingWorker.OnTime + "," + RatingWorker.Behaviour + "," + RatingWorker.Completeness + ");" + st;  
                 //}
                 //else
                 //{
@@ -37,7 +39,7 @@ namespace FMS_Repository
                 //    return result;
                 //}
 
-                result.HasError = DataAccess.ExecuteQuery(query) <= 0;
+                var a= DataAccess.ExecuteQuery(query);
 
                 if (result.HasError)
                     result.Message = "Something Went Wrong";
@@ -88,7 +90,30 @@ namespace FMS_Repository
             }
             return result;
         }
+        public List<RatingWorker> GetAll1(int id)
+        {
+            var result = new List<RatingWorker>();
+            try
+            {
+                string query = "select * from RatingWorker where UserId=" + id;
 
+                var dt = DataAccess.GetDataTable(query);
+
+                if (dt != null && dt.Rows.Count != 0)
+                {
+                    for (int i = 0; i <= dt.Rows.Count; i++)
+                    {
+                        RatingWorker u = ConvertToEntity(dt.Rows[i]);
+                        result.Add(u);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                return result;
+            }
+            return result;
+        }
         public Result<RatingWorker> GetByID(int id)
         {
             var result = new Result<RatingWorker>();

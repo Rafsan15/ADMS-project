@@ -123,7 +123,7 @@ namespace ATP2.FMS.Mvc.Controllers
             {
                 Console.WriteLine(ex.Message);
             }
-            return RedirectToAction("ProjectList","Owner");
+            return RedirectToAction("ProjectList","Worker");
         }
 
         public ActionResult RequestedMember(int id)
@@ -142,6 +142,11 @@ namespace ATP2.FMS.Mvc.Controllers
 
                 var result = selectedWorkerDao.Save(selected);
                 var result2 = response.Delete1(selected.UserId);
+                var r=new ResponseToaJob();
+                r.WUserId = selected.UserId;
+                r.PostId = selected.PostId;
+                var result3 = response.Save(r);
+
                 if (result.HasError)
                 {
                     ViewBag.Message = result.Message;
@@ -225,7 +230,8 @@ namespace ATP2.FMS.Mvc.Controllers
         {
             RequestedMemberModel requested = new RequestedMemberModel();
             var result = response.GetAll(id);
-            var a = result.Where(d => d.Flag == 0);
+            var a = result.Where(d => d.Flag == 0).ToList();
+           // var b = a.Where(d => d.Flag2 == 0).ToList();
             var result2 = postProjectDao.GetByID(id);
             requested.ProjectName = result2.Data.ProjectName;
             requested.Description = result2.Data.Description;

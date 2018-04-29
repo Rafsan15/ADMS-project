@@ -145,10 +145,11 @@ namespace ATP2.FMS.Mvc.Controllers
             return RedirectToAction("OwnerProfile", "Owner");
         }
     
-        public ActionResult RatingWorkers(int id)
+        public ActionResult RatingWorkers(int id,int id2)
         {
             RatingWorkerModel ratingWorkerModel = new RatingWorkerModel();
             ratingWorkerModel.Id = id;
+            ratingWorkerModel.PostId = id2;
 
             //var result = selectedWorkerDao.GetAll(id);
             //ratingWorkerModel.SelectedWorkers = result;
@@ -188,11 +189,13 @@ namespace ATP2.FMS.Mvc.Controllers
             rating.UserId = ratingWorkerModel.Id;
 
             var result = ratingWorkerDao.Save(rating);
-            return RedirectToAction("WorkerList", "Owner");
+            return RedirectToAction("WorkerList", "Owner",new{id=ratingWorkerModel.PostId});
         }
 
+        public int P_id { get; set; }
         public ActionResult WorkerList(int id)
         {
+            P_id = id;
             RatingWorkerModel ratingWorkerModel=new RatingWorkerModel();
 
             var result = selectedWorkerDao.GetAll(id);
